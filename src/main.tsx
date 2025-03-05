@@ -21,7 +21,7 @@ css`
     * {
       box-sizing: border-box;
     }
-
+    p{ margin: 0};
     html,
     body,
     
@@ -326,6 +326,7 @@ css`
       --icon-default: 1.5rem;
     }
   }
+
 `;
 
 const root = document.getElementById("root");
