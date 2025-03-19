@@ -1,0 +1,110 @@
+import { styled } from '@linaria/react'
+
+export type Variants = "default" | "secondary";
+
+interface ElTabMenuProps {
+  "aria-selected": boolean
+  "data-is-focused": boolean
+}
+
+interface ElTabsProps {
+  "data-variant"?: Variants
+}
+
+
+export const ElTabMenu = styled.button<ElTabMenuProps>`
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  padding: var(--spacing-3) 0px;
+  align-items: flex-start;
+  display: flex;
+  
+  background: var(--fill-white);
+  color: var(--text-secondary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-style: normal;
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-base);
+  letter-spacing: var(--letter-spacing-base);
+  &:hover{
+    border-bottom: var(--border-double) solid var(--outline-dashed);
+  }
+  &:disabled{
+    color: var(--text-placeholder);
+    cursor: initial;
+    &:hover{
+      border-bottom-color: transparent;
+    }
+  }
+
+  
+  &[aria-selected=true] {
+    border-bottom: var(--border-double) solid var(--outline-primary);
+    color: var(--text-action);
+  }
+  &[data-is-focused=true] {
+    box-shadow: 0px 0px 0px 1px #FFF, 0px 0px 0px 4px var(--purple-300);
+  }
+`
+
+export const ElTabContent = styled.div`
+
+`
+export const ElTabNavigation = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: var(--spacing-7);
+  border-bottom: var(--border-default) solid var(--outline-default);
+
+`
+
+export const ElTabPanel = styled.div`
+
+`
+export const ElTabs = styled.section<ElTabsProps>`
+  
+  &[data-variant="secondary"]{
+    ${ElTabNavigation}{
+      border-bottom: none;
+      gap: var(--spacing-3);
+    }
+    ${ElTabMenu}{
+      padding: var(--spacing-0) 0px;
+      border-bottom: 1px solid transparent;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-3);
+      &::after{
+        content: "";
+        width: 1px;
+        height: var(--size-4);
+        background: var(--fill-default-light);
+      }
+      &:hover{
+        border-bottom: 1px solid var(--outline-dashed);
+      }
+      &:disabled{
+        color: var(--text-placeholder);
+        cursor: initial;
+        &:hover{
+          border-bottom-color: transparent;
+        }
+      }
+
+      
+      &[aria-selected=true] {
+        color: var(--text-primary);
+      }
+      &[data-is-focused=true] {
+        box-shadow: 0px 0px 0px 1px #FFF, 0px 0px 0px 4px var(--purple-300);
+      }
+    }
+    
+  }
+`

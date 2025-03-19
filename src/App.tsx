@@ -1,7 +1,14 @@
+import { BrowserRouter, Route, Router, Routes } from "react-router";
 import { Accordion } from "./accordion";
 import { DateTimeInput } from "./date-time-input";
 import { LabelText } from "./label-text";
 import { ElFeature, elIcon } from "./styles";
+import { Tabs } from "./tabs";
+import { TabContent } from "./tabs/tab-content";
+import { TabMenu } from "./tabs/tab-menu";
+import { TabNavigation } from "./tabs/tab-navigation";
+import { TabPanel } from "./tabs/tab-panel";
+import { TabsRouter } from "./tabs/tabs-router";
 
 
 
@@ -96,6 +103,66 @@ const App = () => {
           </Accordion.Body>
         </Accordion>
       </Accordion.Group>
+
+      <div><h1>Tabs With Router</h1></div>
+      <BrowserRouter >
+        <Tabs.Router>
+          <Tabs>
+            <Tabs.Navigation>
+              <Tabs.Menu aria-controls="tabpanel-1" >Default tab item 1</Tabs.Menu>
+              <Tabs.Menu aria-controls="tabpanel-2" >Default tab item 2</Tabs.Menu>
+              <Tabs.Menu aria-controls="tabpanel-3" isDisabled>Default tab item 3</Tabs.Menu>
+              <Tabs.Menu aria-controls="tabpanel-4" >Default tab item 4</Tabs.Menu>
+              <Tabs.Menu aria-controls="tabpanel-5" >Default tab item 5</Tabs.Menu>
+            </Tabs.Navigation>
+            <Tabs.Content>
+              <Routes>
+                <Route path="tabpanel-1" element={<div>Content 1</div>} />
+                <Route path="tabpanel-2" element={<div>Content 2</div>} />
+                <Route path="tabpanel-3" element={<div>Content 3</div>} />
+                <Route path="tabpanel-4" element={<div>Content 4</div>} />
+                <Route path="tabpanel-5" element={<div>Content 5</div>} />
+              </Routes>
+            </Tabs.Content>
+          </Tabs>
+        </Tabs.Router>
+      </BrowserRouter>
+
+      <div><h1>Tabs With no Router</h1></div>
+      <Tabs>
+        <Tabs.Navigation>
+          <Tabs.Menu aria-controls="tabpanel-1" >Default tab item 1</Tabs.Menu>
+          <Tabs.Menu aria-controls="tabpanel-2" >Default tab item 2</Tabs.Menu>
+          <Tabs.Menu aria-controls="tabpanel-3" isDisabled>Default tab item 3</Tabs.Menu>
+          <Tabs.Menu aria-controls="tabpanel-4" >Default tab item 4</Tabs.Menu>
+          <Tabs.Menu aria-controls="tabpanel-5" >Default tab item 5</Tabs.Menu>
+        </Tabs.Navigation>
+        <Tabs.Content>
+          <Tabs.Panel id="tabpanel-1">Content 1</Tabs.Panel>
+          <Tabs.Panel id="tabpanel-2">Content 2</Tabs.Panel>
+          <Tabs.Panel id="tabpanel-3">Content 3</Tabs.Panel>
+          <Tabs.Panel id="tabpanel-4">Content 4</Tabs.Panel>
+          <Tabs.Panel id="tabpanel-5">Content 5</Tabs.Panel>
+        </Tabs.Content>
+      </Tabs>
+
+      <div><h1>Tabs With Variant secondary</h1></div>
+      <Tabs variant="secondary">
+        <Tabs.Navigation>
+          <Tabs.Menu aria-controls="tabpanel-1" >Default tab item 1</Tabs.Menu>
+          <Tabs.Menu aria-controls="tabpanel-2" >Default tab item 2</Tabs.Menu>
+          <Tabs.Menu aria-controls="tabpanel-3" isDisabled>Default tab item 3</Tabs.Menu>
+          <Tabs.Menu aria-controls="tabpanel-4" >Default tab item 4</Tabs.Menu>
+          <Tabs.Menu aria-controls="tabpanel-5" >Default tab item 5</Tabs.Menu>
+        </Tabs.Navigation>
+        <Tabs.Content>
+          <Tabs.Panel id="tabpanel-1">Content 1</Tabs.Panel>
+          <Tabs.Panel id="tabpanel-2">Content 2</Tabs.Panel>
+          <Tabs.Panel id="tabpanel-3">Content 3</Tabs.Panel>
+          <Tabs.Panel id="tabpanel-4">Content 4</Tabs.Panel>
+          <Tabs.Panel id="tabpanel-5">Content 5</Tabs.Panel>
+        </Tabs.Content>
+      </Tabs>
     </div>
   );
 };
