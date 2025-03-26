@@ -1,20 +1,20 @@
+import { css } from '@linaria/core';
 import { styled } from '@linaria/react'
-import { AnchorHTMLAttributes } from 'react';
 
 export type Variants = "default" | "secondary";
 
-interface ElTabItemProps {
-  "aria-selected": boolean
-  "aria-disabled"?: boolean
-  "data-is-focused": boolean
-}
+// interface ElTabItemProps {
+//   "aria-selected": boolean
+//   "aria-disabled"?: boolean
+//   "data-is-focused": boolean
+// }
 
 interface ElTabsProps {
   "data-variant"?: Variants
 }
 
 
-export const ElTabItem = styled.a<ElTabItemProps>`
+export const elTabItem = css`
   text-decoration: none;
   border: 0;
   outline: none;
@@ -65,14 +65,7 @@ export const ElTabList = styled.ul`
   margin: 0;
 
 `
-export const ElTabItemWrapper = styled.li`
-  /* display: flex;
-  width: 100%;
-  align-items: flex-start;
-  gap: var(--spacing-7);
-  border-bottom: var(--border-default) solid var(--outline-default); */
-
-`
+export const ElTabItemWrapper = styled.li``
 
 export const ElTabs = styled.section<ElTabsProps>`
   
@@ -81,7 +74,7 @@ export const ElTabs = styled.section<ElTabsProps>`
       border-bottom: none;
       gap: var(--spacing-3);
     }
-    ${ElTabItem}{
+    ${elTabItem}{
       padding: var(--spacing-0) 0px;
       border-bottom: 1px solid transparent;
       color: var(--text-secondary);

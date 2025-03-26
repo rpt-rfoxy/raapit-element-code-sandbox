@@ -107,11 +107,11 @@ const App = () => {
       <div><h1>Tabs </h1></div>
       <BrowserRouter >
         <Tabs variant="default">
-          <Tabs.Item href="/tabpanel-1" >Default tab item 1</Tabs.Item>
-          <Tabs.Item href="/tabpanel-2" >Default tab item 2</Tabs.Item>
-          <Tabs.Item href="/tabpanel-3" isDisabled>Default tab item 3</Tabs.Item>
-          <Tabs.Item href="/tabpanel-4" >Default tab item 4</Tabs.Item>
-          <Tabs.Item href="/tabpanel-5" >Default tab item 5</Tabs.Item>
+          <Tabs.Item href="tabpanel-1" >Default tab item 1</Tabs.Item>
+          <Tabs.Item href="tabpanel-2" >Default tab item 2</Tabs.Item>
+          <Tabs.Item href="tabpanel-3" isDisabled>Default tab item 3</Tabs.Item>
+          <Tabs.Item href="tabpanel-4" >Default tab item 4</Tabs.Item>
+          <Tabs.Item href="tabpanel-5" >Default tab item 5</Tabs.Item>
         </Tabs>
         <Routes>
           <Route path="tabpanel-1" element={<div>Content 1</div>} />
