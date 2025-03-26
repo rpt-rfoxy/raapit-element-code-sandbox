@@ -1,35 +1,28 @@
-import React, { FC, HTMLAttributes, useState } from 'react'
+import React, { FC, HTMLAttributes, useRef, useState } from 'react'
 import { ElTabs, Variants } from './styles'
 import { TabsContext } from './tabs-context'
-import { TabsRouter, useTabsRouter } from './tabs-router'
 import { TabNavigation } from './tab-navigation'
-import { TabContent } from './tab-content'
-import { TabPanel } from './tab-panel'
-import { TabMenu } from './tab-menu'
+import { TabItem } from './tab-item'
 
 interface TabsProps extends HTMLAttributes<HTMLElement> {
   variant?: Variants
 }
 
 export const TabsComponent: FC<TabsProps> = ({ children, variant, ...restProps }) => {
-  const { handleNavigate } = useTabsRouter()
+  const activeTabRef = useRef<HTMLAnchorElement | null>(null)
   const [focusedTab, setFocusedTab] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState<string | null>(null)
-
-
-  const handleTabOnClick = (tab: string | null) => {
-    setActiveTab(tab)
-    handleNavigate(tab)
-  }
+  const [activeTab] = useState<string | null>(null)
 
   const handleTabOnFocused = (tab: string | null) => {
     setFocusedTab(tab)
   }
 
   return (
-    <TabsContext.Provider value={{ activeTab, focusedTab, handleTabOnClick, handleTabOnFocused }}>
-      <ElTabs {...restProps} data-variant={variant}>
-        {children}
+    <TabsContext.Provider value={{ activeTab, focusedTab, activeTabRef, handleTabOnFocused }}>
+      <ElTabs {...restProps} role="tabs" data-variant={variant}>
+        <TabNavigation>
+          {children}
+        </TabNavigation>
       </ElTabs>
     </TabsContext.Provider>
   )
@@ -38,9 +31,5 @@ export const TabsComponent: FC<TabsProps> = ({ children, variant, ...restProps }
 
 
 export const Tabs = Object.assign(TabsComponent, {
-  Router: TabsRouter,
-  Menu: TabMenu,
-  Navigation: TabNavigation,
-  Content: TabContent,
-  Panel: TabPanel
+  Item: TabItem,
 });

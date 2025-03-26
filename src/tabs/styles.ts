@@ -1,9 +1,11 @@
 import { styled } from '@linaria/react'
+import { AnchorHTMLAttributes } from 'react';
 
 export type Variants = "default" | "secondary";
 
-interface ElTabMenuProps {
+interface ElTabItemProps {
   "aria-selected": boolean
+  "aria-disabled"?: boolean
   "data-is-focused": boolean
 }
 
@@ -12,7 +14,8 @@ interface ElTabsProps {
 }
 
 
-export const ElTabMenu = styled.button<ElTabMenuProps>`
+export const ElTabItem = styled.a<ElTabItemProps>`
+  text-decoration: none;
   border: 0;
   outline: none;
   cursor: pointer;
@@ -32,7 +35,7 @@ export const ElTabMenu = styled.button<ElTabMenuProps>`
   &:hover{
     border-bottom: var(--border-double) solid var(--outline-dashed);
   }
-  &:disabled{
+  &[aria-disabled=true]{
     color: var(--text-placeholder);
     cursor: initial;
     &:hover{
@@ -50,29 +53,35 @@ export const ElTabMenu = styled.button<ElTabMenuProps>`
   }
 `
 
-export const ElTabContent = styled.div`
-
-`
-export const ElTabNavigation = styled.div`
+export const ElTabList = styled.ul`
+  outline: none;
   display: flex;
   width: 100%;
   align-items: flex-start;
   gap: var(--spacing-7);
   border-bottom: var(--border-default) solid var(--outline-default);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+`
+export const ElTabItemWrapper = styled.li`
+  /* display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: var(--spacing-7);
+  border-bottom: var(--border-default) solid var(--outline-default); */
 
 `
 
-export const ElTabPanel = styled.div`
-
-`
 export const ElTabs = styled.section<ElTabsProps>`
   
   &[data-variant="secondary"]{
-    ${ElTabNavigation}{
+    ${ElTabList}{
       border-bottom: none;
       gap: var(--spacing-3);
     }
-    ${ElTabMenu}{
+    ${ElTabItem}{
       padding: var(--spacing-0) 0px;
       border-bottom: 1px solid transparent;
       color: var(--text-secondary);
@@ -89,7 +98,7 @@ export const ElTabs = styled.section<ElTabsProps>`
       &:hover{
         border-bottom: 1px solid var(--outline-dashed);
       }
-      &:disabled{
+      &[aria-disabled=true]{
         color: var(--text-placeholder);
         cursor: initial;
         &:hover{

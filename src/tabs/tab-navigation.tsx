@@ -1,16 +1,15 @@
-import React, { FC, HTMLAttributes, ReactNode, useEffect } from 'react'
-import { ElTabNavigation } from './styles'
+import React, { FC, HTMLAttributes, ReactNode, useEffect, useRef } from 'react'
+import { ElTabList } from './styles'
 import { useTabs } from './tabs-context'
-import { useTabsRouter } from './tabs-router'
 
 interface TabPosition {
-  lastTab: string | null,
-  firstTab: string | null,
+  lastTab: string | null
+  firstTab: string | null
   currentTab: string | null
 }
 
 interface ChildControl {
-  targetPanel: string,
+  targetTabItem: string
   isDisabled?: boolean
 }
 
@@ -23,7 +22,7 @@ interface ChildControl {
 const getChildComtrols = (children: ReactNode | ReactNode[]): ChildControl[] => React.Children.toArray(children)
   .filter((child): child is React.ReactElement => React.isValidElement(child))
   .map((child) => ({
-    targetPanel: child.props["aria-controls"],
+    targetTabItem: child.props.href,
     isDisabled: child.props.isDisabled,
   }));
 
@@ -35,27 +34,37 @@ const getChildComtrols = (children: ReactNode | ReactNode[]): ChildControl[] => 
  * @param {string | null} activeTab - The currently active tab panel.
  * @returns {number} - The index of the active tab, or `-1` if not found.
  */
-const getActiveIndex = (childControls: ChildControl[], activeTab: string | null): number => childControls.findIndex(childControl => childControl.targetPanel === activeTab)
+const getActiveIndex = (childControls: ChildControl[], activeTab: string | null): number => childControls.findIndex(childControl => childControl.targetTabItem === activeTab)
+
+/**
+ * Retrieves the active tabs by pathname location.
+ *
+ * @param {ChildControl[]} childControls - An array of tab Controls.
+ * @returns {string} - The href location.
+ */
+const getActiveRoute = (childControls: ChildControl[]): string => {
+  const pathLocation: string = window.location.pathname
+  return childControls.find(({ targetTabItem }) => {
+    const regTest = new RegExp(targetTabItem.replace(/\//g, "\\/"), "g"); // Escape `/` in target
+    return pathLocation.match(regTest)
+  })?.targetTabItem || ""
+}
 
 
 interface TabNavigationProps extends HTMLAttributes<HTMLElement> { }
 
 export const TabNavigation: FC<TabNavigationProps> = ({ children, ...restProps }) => {
-  const { activeRoute } = useTabsRouter()
+  const navRef = useRef<HTMLUListElement | null>(null)
   const childControls = getChildComtrols(children)
 
-  const { handleTabOnFocused, handleTabOnClick, focusedTab, activeTab } = useTabs()
+  const { handleTabOnFocused, focusedTab, activeTab, activeTabRef } = useTabs(getActiveRoute(childControls))
 
 
   /**
   * To set active tab in intial render,
   */
   const setInitialActiveTab = () => {
-    if (activeRoute) {
-      handleTabOnClick(activeRoute)
-    } else {
-      setActiveTab("Home")
-    }
+    navRef.current?.focus()
   }
 
   useEffect(setInitialActiveTab, [])
@@ -85,9 +94,9 @@ export const TabNavigation: FC<TabNavigationProps> = ({ children, ...restProps }
     else if (keyboardKey === "ArrowRight") tabIndex = getNextValidTab(tabIndex, 1);
 
     return {
-      firstTab: childControls.find(tab => !tab.isDisabled)?.targetPanel ?? null,
-      lastTab: [...childControls].reverse().find(tab => !tab.isDisabled)?.targetPanel ?? null,
-      currentTab: childControls[tabIndex]?.targetPanel,
+      firstTab: childControls.find(tab => !tab.isDisabled)?.targetTabItem ?? null,
+      lastTab: [...childControls].reverse().find(tab => !tab.isDisabled)?.targetTabItem ?? null,
+      currentTab: childControls[tabIndex]?.targetTabItem
     };
   };
 
@@ -108,19 +117,17 @@ export const TabNavigation: FC<TabNavigationProps> = ({ children, ...restProps }
       case 'Home':
       case 'PageUp':
         activeTab = getTabMenuPosition().firstTab
-        handleTabOnClick(activeTab)
         break;
 
       case 'End':
       case 'PageDown':
         activeTab = getTabMenuPosition().lastTab
-        handleTabOnClick(activeTab)
         break;
 
       case 'Spacebar':
       case ' ':
       case 'Enter':
-        handleTabOnClick(focusedTab as string)
+        activeTabRef?.current?.click()
         break;
 
       default:
@@ -136,7 +143,7 @@ export const TabNavigation: FC<TabNavigationProps> = ({ children, ...restProps }
   *
   * @param {React.KeyboardEvent<HTMLDivElement>} event - The keydown event triggered by the user.
   */
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
     setActiveTab(event.key)
     event.stopPropagation();
     event.preventDefault();
@@ -147,15 +154,15 @@ export const TabNavigation: FC<TabNavigationProps> = ({ children, ...restProps }
     *
     * @param {React.FocusEvent<HTMLDivElement>} event - The keydown event triggered by the user.
     */
-  const handleOnFocusBlur = (event: React.FocusEvent<HTMLDivElement>) => {
+  const handleOnFocusBlur = (event: React.FocusEvent<HTMLElement>) => {
     handleTabOnFocused(null)
     event.stopPropagation();
     event.preventDefault();
   }
 
   return (
-    <ElTabNavigation {...restProps} role="tablist" onKeyDown={handleKeyDown} onBlur={handleOnFocusBlur}>
+    <ElTabList {...restProps} tabIndex={0} role="tablist" ref={navRef} onKeyDown={handleKeyDown} onBlur={handleOnFocusBlur}>
       {children}
-    </ElTabNavigation>
+    </ElTabList>
   )
 }
