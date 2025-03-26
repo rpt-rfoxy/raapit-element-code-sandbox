@@ -4,17 +4,12 @@ import { DateTimeInput } from "./date-time-input";
 import { LabelText } from "./label-text";
 import { ElFeature, elIcon } from "./styles";
 import { Tabs } from "./tabs";
-// import { TabContent } from "./tabs/tab-content";
-// import { TabMenu } from "./tabs/tab-item";
-// import { TabNavigation } from "./tabs/tab-navigation";
-// import { TabPanel } from "./tabs/tab-panel";
-// import { TabsRouter } from "./tabs/tabs-router";
-
-
+import { ErrorText } from "./error-text";
 
 const App = () => {
   return (
     <div>
+      <div><h1>Input Date </h1></div>
       <DateTimeInput
         {...{
           placeholder: 'A Placeholder',
@@ -58,7 +53,7 @@ const App = () => {
           isError: true
         }}
       />
-
+      <div><h1>Accordion </h1></div>
       <Accordion.Group>
         <Accordion>
           <Accordion.Header>
@@ -122,6 +117,11 @@ const App = () => {
         </Routes>
       </BrowserRouter>
 
+      <div>
+        <div><h1>Error Text </h1></div>
+        <ErrorText isError >Error text tes</ErrorText>
+        <ErrorText isError size="large">Error text tes Large</ErrorText>
+      </div>
     </div>
   );
 };

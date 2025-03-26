@@ -1,11 +1,11 @@
 import React, { forwardRef, LegacyRef } from 'react'
 import {
-  ElInputErrorText,
   ElInputField,
   ElInputSizesEnum,
   ElDateTimeInput,
 } from './styles'
 import { LabelText } from '../label-text'
+import { ErrorText } from '../error-text'
 
 export interface DateTimeInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   isError?: boolean
@@ -41,7 +41,7 @@ export const DateTimeInput: React.ForwardRefExoticComponent<DateTimeInputProps> 
           aria-label={`Input type ${type}`}
           ref={ref as unknown as LegacyRef<HTMLInputElement>}
         />
-        {isError && errorMessage && <ElInputErrorText data-size={textSize}>{errorMessage}</ElInputErrorText>}
+        <ErrorText isError={isError} data-size={textSize}>{errorMessage}</ErrorText>
         {!isError && helperText && <LabelText size={textSize}>{helperText}</LabelText>}
       </ElDateTimeInput>
     )

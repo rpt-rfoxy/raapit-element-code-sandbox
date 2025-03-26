@@ -113,26 +113,3 @@ export const ElInputField = styled.input<ElInputFieldProps>`
   }
   
 `
-export interface ElInputErrorTextProps {
-  'data-size'?: ElInputSizesEnum
-}
-
-export const ElInputErrorText = styled.p<ElInputErrorTextProps>`
-  color: var(--intent-danger);
-  font-size: var(--font-size-small);
-  text-align: left;
-  color: var(--text-error);
-  font-family: var(--font-family);
-  font-size: var(--font-size-xs);
-  font-style: normal;
-  font-weight: var(--font-weight-regular);
-  line-height: var(--line-height-xs);
-  letter-spacing: var(--letter-spacing-xs);
-
-  &[data-size='small'] {
-    font-size: var(--font-size-xs);
-  }
-  &[data-size='medium'] {
-    font-size: var(--font-size-sm);
-  }
-`
