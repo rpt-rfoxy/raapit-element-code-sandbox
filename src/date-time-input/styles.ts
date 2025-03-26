@@ -18,7 +18,7 @@ export const ElDateTimeInput = styled.div`
 export const ElInputField = styled.input<ElInputFieldProps>`
   position: relative;
   padding: var(--spacing-2) var(--spacing-3);
-  padding-right:  var(--icon-md);
+  padding-right:  30px;
   gap: var(--spacing-2);
   border-radius: var(--corner-sm);
   border: var(--border-default) solid var(--outline-text_input-default);

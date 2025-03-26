@@ -5,54 +5,69 @@ import { LabelText } from "./label-text";
 import { ElFeature, elIcon } from "./styles";
 import { Tabs } from "./tabs";
 import { ErrorText } from "./error-text";
+import { FormProvider, useForm } from "react-hook-form";
 
 const App = () => {
+  const methods = useForm()
+
+  const onSubmit = (data: any) => {
+    console.log('Form Submitted:', data)
+  }
   return (
     <div>
       <div><h1>Input Date </h1></div>
-      <DateTimeInput
-        {...{
-          placeholder: 'A Placeholder',
-          label: 'Date Time Input',
-          errorMessage: "Some Error",
-          size: 'small',
-          helperText: "This is a long optional helper text that won’t fit in a single row"
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <DateTimeInput
+            {...{
+              placeholder: 'A Placeholder',
+              label: 'Date Time Input',
+              errorMessage: "Some Error",
+              size: 'small',
+              helperText: "This is a long optional helper text that won’t fit in a single row",
+              name: "date_1"
+            }}
+          />
+          <DateTimeInput
+            {...{
+              type: 'time',
+              placeholder: 'A Placeholder',
+              label: 'Date Time Input',
+              errorMessage: "Some Error",
+              size: 'small',
+              helperText: "This is a long optional helper text that won’t fit in a single row",
+              name: "date_2"
+            }}
+          />
+          <DateTimeInput
+            {...{
+              type: 'time',
+              placeholder: 'A Placeholder',
+              label: 'Date Time Input',
+              errorMessage: "Some Error",
+              size: 'large',
+              helperText: "This is a long optional helper text that won’t fit in a single row",
+              name: "date_3"
 
-        }}
-      />
-      <DateTimeInput
-        {...{
-          type: 'time',
-          placeholder: 'A Placeholder',
-          label: 'Date Time Input',
-          errorMessage: "Some Error",
-          size: 'small',
-          helperText: "This is a long optional helper text that won’t fit in a single row"
+            }}
+          />
+          <DateTimeInput
+            {...{
+              type: 'time',
+              placeholder: 'A Placeholder',
+              label: 'Date Time Input',
+              errorMessage: "Some Error",
+              size: 'large',
+              helperText: "This is a long optional helper text that won’t fit in a single row",
+              name: "date_2",
+              // isError: true
+              isRequired: true
+            }}
+          />
+          <button type="submit">Submit</button>
+        </form>
+      </FormProvider>
 
-        }}
-      />
-      <DateTimeInput
-        {...{
-          type: 'time',
-          placeholder: 'A Placeholder',
-          label: 'Date Time Input',
-          errorMessage: "Some Error",
-          size: 'large',
-          helperText: "This is a long optional helper text that won’t fit in a single row"
-
-        }}
-      />
-      <DateTimeInput
-        {...{
-          type: 'time',
-          placeholder: 'A Placeholder',
-          label: 'Date Time Input',
-          errorMessage: "Some Error",
-          size: 'large',
-          helperText: "This is a long optional helper text that won’t fit in a single row",
-          isError: true
-        }}
-      />
       <div><h1>Accordion </h1></div>
       <Accordion.Group>
         <Accordion>
