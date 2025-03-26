@@ -37,7 +37,7 @@ export const DateTimeInput = forwardRef<HTMLInputElement, DateTimeInputProps>(
         )}
         <ElInputField
           {...rest}
-          {...register(name, { required: isRequired ? 'This field is required' : false })}
+          {...register(name, { required: isRequired ? errorMessage : false })}
           type={type}
           data-is-error={!!errorMessage}
           data-size={size}
