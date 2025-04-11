@@ -10,3 +10,9 @@ export const elIcon = css`
   width: var(--icon-sm);
   height: var(--icon-sm);
 `
+
+export const elForm = css`
+ display: flex;
+ gap: 20px;
+ flex-direction: column;
+`

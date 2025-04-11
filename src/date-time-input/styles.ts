@@ -7,12 +7,7 @@ interface ElInputFieldProps {
   'data-is-error'?: boolean
 }
 
-export const ElDateTimeInput = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--spacing-2);
-`
+
 
 
 export const ElInputField = styled.input<ElInputFieldProps>`
@@ -33,6 +28,7 @@ export const ElInputField = styled.input<ElInputFieldProps>`
   outline: none;
   margin: 0;
   appearance: auto;
+  width: 100%;
 
   &[data-size='small'] {
     font-size: var(--font-size-xs);
@@ -70,19 +66,13 @@ export const ElInputField = styled.input<ElInputFieldProps>`
     &::-webkit-calendar-picker-indicator {
       opacity: 1 !important;
       pointer-events: auto; /* Allow interaction */
-  }
+    }
   }
 
   &:read-only {
     background-color: var(--fill-default-lightest);
     border-color: var(--fill-default-lightest);
   }
-
-  &[data-is-error='true'] {
-    border-color: var(--outline-error);
-    background-color: var(--fill-error-light);
-  }
-
   &::-webkit-calendar-picker-indicator {
     border-radius: var(--corner-default);
     position: absolute;
@@ -113,3 +103,20 @@ export const ElInputField = styled.input<ElInputFieldProps>`
   }
   
 `
+
+export const ElDateTimeInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-2);
+
+  &[data-is-error='true'] {
+    &:not(:has(input:disabled)) {
+      ${ElInputField}{
+        border-color: var(--outline-error);
+        background-color: var(--fill-error-light);
+      }
+    }
+  }
+`
+
