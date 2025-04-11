@@ -11,11 +11,10 @@ export interface TextInputProps extends Omit<React.InputHTMLAttributes<HTMLInput
   variant?: ElInputVariantEnum
   size?: ElInputSizesEnum
   isRequired?: boolean
-
-  leadingIcon?: ReactNode
+  isBusy?: boolean
+  loadingIcon?: ReactNode
   prefix?: ReactNode
   suffix?: ReactNode
-  trailingIcon?: ReactNode
   type: 'text'
   | 'password'
   | 'email'
@@ -28,7 +27,7 @@ export interface TextInputProps extends Omit<React.InputHTMLAttributes<HTMLInput
 
 export const TextInput: React.ForwardRefExoticComponent<TextInputProps> = forwardRef(
   (
-    { isError, isRequired, size = "medium", variant, prefix, suffix, ...rest },
+    { isError, isRequired, size = "medium", loadingIcon, variant = "default", prefix, suffix, isBusy, ...rest },
     ref: React.ForwardedRef<React.InputHTMLAttributes<HTMLInputElement>>,
   ) => {
     return (
@@ -44,6 +43,7 @@ export const TextInput: React.ForwardRefExoticComponent<TextInputProps> = forwar
           ref={ref as unknown as LegacyRef<HTMLInputElement>}
         />
         {suffix && suffix}
+        {isBusy && loadingIcon && loadingIcon}
       </ElTextInput>
     )
   },
