@@ -11,6 +11,7 @@ import { FormControl } from "./form-control";
 interface FormValues {
   text_1: string
   text_2: string
+  text_3: string
   date_1: string
 }
 const App = () => {
@@ -24,6 +25,40 @@ const App = () => {
     <div>
       <div><h1>Input </h1></div>
       <form onSubmit={handleSubmit(onSubmit)} className={elForm}>
+        <FormControl >
+          <FormControl.Label>Example Title</FormControl.Label>
+          <FormControl.Input>
+            <TextInput
+              {...register("date_1", { required: "Error Display Here" })}
+              {...{
+                type: 'date',
+                placeholder: 'A Placeholder',
+                size: 'small',
+                isError: true,
+
+              }}
+            />
+          </FormControl.Input>
+          <FormControl.ErrorText>Error Display Here</FormControl.ErrorText>
+          <FormControl.HelperText>Helper Display Here</FormControl.HelperText>
+        </FormControl>
+        <FormControl >
+          <FormControl.Label>Example Title</FormControl.Label>
+          <FormControl.Input>
+            <TextInput
+              {...register("date_1", { required: "Error Display Here" })}
+              {...{
+                type: 'date',
+                placeholder: 'A Placeholder',
+                size: 'medium',
+                isError: !!errors?.date_1?.message,
+
+              }}
+            />
+          </FormControl.Input>
+          <FormControl.ErrorText>Error Display Here</FormControl.ErrorText>
+          <FormControl.HelperText>Helper Display Here</FormControl.HelperText>
+        </FormControl>
         <FormControl >
           <FormControl.Label>Example Title</FormControl.Label>
           <FormControl.Input>
@@ -85,6 +120,25 @@ const App = () => {
                 size: 'large',
                 isError: !!errors?.text_1?.message,
                 disabled: true,
+              }}
+            />
+          </FormControl.Input>
+          <FormControl.ErrorText>Error Display Here</FormControl.ErrorText>
+          <FormControl.HelperText>Helper Display Here</FormControl.HelperText>
+        </FormControl>
+
+        <FormControl >
+          <FormControl.Label>Example Title</FormControl.Label>
+          <FormControl.Input>
+            <TextInput
+              {...register("text_3", { required: "Error Display Here" })}
+              {...{
+                type: 'text',
+                placeholder: 'A Placeholder',
+                size: 'medium',
+                isError: !!errors?.text_1?.message,
+                // disabled: true,
+                readOnly: true
               }}
             />
           </FormControl.Input>

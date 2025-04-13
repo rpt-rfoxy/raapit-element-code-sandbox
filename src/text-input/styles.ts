@@ -19,17 +19,22 @@ export const ElTextInput = styled.div<ElInputFieldWrapperProps>`
   padding: var(--spacing-2) var(--spacing-3);
   align-items: center;
   gap: var(--spacing-2);
-  border-radius: var(--corner-sm);
-  border: var(--border-default) solid var(--outline-text_input-default);
-  background: var(--fill-white);
+
+  border-radius: var(--comp-input-border-radius);
+  border: var(--comp-input-border-width) solid var(--comp-input-colour-border-default);
+  background: var(--comp-input-colour-fill-default-background);
 
   &:has(input:focus) {
-    border-color: var(--outline-text_input-focus);
+    &:not(:has(input:read-only)) {
+      border: var(--comp-input-border-width) solid var(--comp-input-colour-border-focused);
+      background: var(--comp-input-colour-fill-focused-background);
+    }
+   
   }
 
   &:has(input:disabled) {
-    background-color: var(--fill-default-light);
-    border-color: var(--fill-default-light);
+    border: var(--comp-input-border-width) solid var(--comp-input-colour-border-disabled);
+    background: var(--comp-input-colour-fill-disabled-background);
     cursor: not-allowed;
     * {
       cursor: not-allowed;
@@ -37,15 +42,14 @@ export const ElTextInput = styled.div<ElInputFieldWrapperProps>`
   }
 
   &:has(input:read-only) {
-    background-color: var(--fill-default-lightest);
-    border-color: var(--fill-default-lightest);
-    
+    background: var(--comp-input-colour-fill-read_only-background);
+    border: var(--comp-input-border-width) solid var(--comp-input-colour-fill-read_only-background);
   }
 
   &[data-is-error='true'] {
-    &:not(:has(input:disabled)) {
-      border-color: var(--outline-error);
-      background-color: var(--fill-error-light);
+    &:not(:has(input:disabled)):not(:has(input:read-only)) {
+      border: var(--comp-input-border-width) solid var(--comp-input-colour-border-error);
+      background: var(--comp-input-colour-fill-error-background);
     }
   }
 
@@ -54,52 +58,82 @@ export const ElTextInput = styled.div<ElInputFieldWrapperProps>`
   &:has(input[type="datetime-local"]),
   &:has(input[type="week"]),
   &:has(input[type="month"]) {
-    padding-right: 32px !important;
+    padding-right: calc(var(--spacing-3) * 2) !important;
   }
 
-  
+
+  &:has(input[data-size='small']) {
+    padding: var(--spacing-2);
+    input{
+      font-family: var(--font-xs-regular-family);
+      font-size: var(--font-xs-regular-size);
+      font-weight: var(--font-xs-regular-weight);
+      line-height: var(--font-xs-regular-line_height);
+      letter-spacing: var(--font-xs-regular-letter_spacing);
+      &::-webkit-calendar-picker-indicator {
+        width: var(--icon_size-s);
+        height: var(--icon_size-s);
+      }
+    }
+  }
+  &:has(input[data-size='medium']) {
+    input{
+      font-family: var(--font-sm-regular-family);
+      font-size: var(--font-sm-regular-size);
+      font-weight: var(--font-sm-regular-weight);
+      line-height: var(--font-sm-regular-line_height); 
+      letter-spacing: var(--font-sm-regular-letter_spacing);
+      &::-webkit-calendar-picker-indicator {
+        width: var(--icon_size-s);
+        height: var(--icon_size-s);
+      }
+    }
+  }
+  &:has(input[data-size='large']) {
+    input{
+      font-family: var(--font-base-regular-family);
+      font-size: var(--font-base-regular-size);
+      font-style: normal;
+      font-weight: var(--font-base-regular-weight);
+      line-height: var(--font-base-regular-line_height);
+      letter-spacing: var(--font-base-regular-letter_spacing);
+      &::-webkit-calendar-picker-indicator {
+        width: var(--icon_size-m);
+        height: var(--icon_size-m);
+      }
+    }
+  }
+
+  svg{
+    fill: var(--colour-icon-primary);
+  }
 `
 
 export const ElInputField = styled.input<ElInputFieldProps>`
+  background-color: inherit;
   display: flex;
   flex: 1;
   text-align: left;
-  color: var(--text-primary);
-  background: inherit;
-  font-family: var(--font-family);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-regular);
-  line-height: var(--line-height-xs);
-  letter-spacing: var(--letter-spacing-xs);
   outline: none;
   border: none;
   margin: 0;
+  color: var(--comp-input-colour-text-default-input);
+  font-family: var(--font-base-regular-family);
+  font-size: var(--font-base-regular-size);
+  font-style: normal;
+  font-weight: var(--font-base-regular-weight);
+  line-height: var(--font-base-regular-line_height); 
+  letter-spacing: var(--font-base-regular-letter_spacing);
 
-  &[data-size='small'] {
-    font-size: var(--font-size-xs);
-    line-height: var(--line-height-xs);
-    letter-spacing: var(--letter-spacing-xs);
-  }
-  &[data-size='medium'] {
-    font-size: var(--font-size-sm);
-    line-height: var(--line-height-sm);
-    letter-spacing: var(--letter-spacing-sm);
-  }
-  &[data-size='large'] {
-    font-size: var(--font-size-base);
-    line-height: var(--line-height-base);
-    letter-spacing: var(--letter-spacing-base);
-  }
-
+  
   &[data-variant='with-suffix'] {
     text-align: right;
   }
 
   &::placeholder {
-    color: var(--text-placeholder);
-    font-family: var(--font-sans-serif);
-    font-size: var(--font-size-small);
+    color: var(--comp-input-colour-text-default-placeholder);
   }
+
   &[type='number']::-webkit-outer-spin-button,
   &[type='number']::-webkit-inner-spin-button,
   &[type='number'] {
@@ -109,16 +143,7 @@ export const ElInputField = styled.input<ElInputFieldProps>`
     margin: 0;
   }
 
-  &::placeholder {
-    color: var(--text-placeholder);
-    font-family: var(--font-sans-serif);
-    font-size: var(--font-size-small);
-  }
-
-  &:focus {
-    border-color: var(--outline-text_input-focus);
-  }
-
+ 
   &:disabled {
     cursor: not-allowed;
     * {
@@ -131,16 +156,18 @@ export const ElInputField = styled.input<ElInputFieldProps>`
   }
 
   &::-webkit-calendar-picker-indicator {
-    border-radius: var(--corner-default);
+    border-radius: var(--border-radius-m);
     position: absolute;
     right: var(--spacing-4);
-    width: var(--icon-sm);
-    height: var(--icon-sm);
+    width: var(--icon_size-m);
+    height: var(--icon_size-m);
     cursor: pointer;
     opacity: 0.6;
     outline: none;
     &:focus {
-      box-shadow: 0px 0px 0px 1px #FFF, 0px 0px 0px 4px var(--purple-300);
+      box-shadow: 0px 0px 0px 1px #FFF, 0px 0px 0px 4px var(--colour-border-focus);
+
+      /* border: var(--border-width-double) solid var(--colour-border-focus); */
     }
   }
   

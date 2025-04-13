@@ -674,6 +674,7 @@ css`
   --comp-upload_item-colour-border-progress_bar: #4e56ea;
   --comp-upload_item-border-width: 1px;
   --comp-upload_item-border-radius: 4px;
+
       --neutral-900: #222b33;
       --neutral-800: #323e4b;
       --neutral-700: #415161;
