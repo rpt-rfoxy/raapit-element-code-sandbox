@@ -22,7 +22,11 @@ export interface TextInputProps extends Omit<React.InputHTMLAttributes<HTMLInput
   | 'tel'
   | 'url'
   | 'hidden'
-
+  | 'time'
+  | 'date'
+  | 'datetime-local'
+  | 'week'
+  | 'month'
 }
 
 export const TextInput: React.ForwardRefExoticComponent<TextInputProps> = forwardRef(

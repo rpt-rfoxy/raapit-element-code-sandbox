@@ -1,10 +1,9 @@
 import { BrowserRouter, Route, Router, Routes } from "react-router";
 import { Accordion } from "./accordion";
-import { DateTimeInput } from "./date-time-input";
 import { LabelText } from "./label-text";
 import { ElFeature, elForm, elIcon } from "./styles";
 import { Tabs } from "./tabs";
-import { FormProvider, useForm, UseFormGetValues } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { TextInput } from "./text-input";
 import { FormControl } from "./form-control";
@@ -28,7 +27,7 @@ const App = () => {
         <FormControl >
           <FormControl.Label>Example Title</FormControl.Label>
           <FormControl.Input>
-            <DateTimeInput
+            <TextInput
               {...register("date_1", { required: "Error Display Here" })}
               {...{
                 type: 'date',

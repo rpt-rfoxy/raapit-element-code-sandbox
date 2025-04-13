@@ -39,6 +39,7 @@ export const ElTextInput = styled.div<ElInputFieldWrapperProps>`
   &:has(input:read-only) {
     background-color: var(--fill-default-lightest);
     border-color: var(--fill-default-lightest);
+    
   }
 
   &[data-is-error='true'] {
@@ -46,6 +47,14 @@ export const ElTextInput = styled.div<ElInputFieldWrapperProps>`
       border-color: var(--outline-error);
       background-color: var(--fill-error-light);
     }
+  }
+
+  &:has(input[type="time"]),
+  &:has(input[type="date"]),
+  &:has(input[type="datetime-local"]),
+  &:has(input[type="week"]),
+  &:has(input[type="month"]) {
+    padding-right: 32px !important;
   }
 
   
@@ -98,5 +107,56 @@ export const ElInputField = styled.input<ElInputFieldProps>`
     -moz-appearance: textfield;
     appearance: none;
     margin: 0;
+  }
+
+  &::placeholder {
+    color: var(--text-placeholder);
+    font-family: var(--font-sans-serif);
+    font-size: var(--font-size-small);
+  }
+
+  &:focus {
+    border-color: var(--outline-text_input-focus);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    * {
+      cursor: not-allowed;
+    }
+    &::-webkit-calendar-picker-indicator {
+      opacity: 1 !important;
+      pointer-events: auto; /* Allow interaction */
+    }
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    border-radius: var(--corner-default);
+    position: absolute;
+    right: var(--spacing-4);
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+    cursor: pointer;
+    opacity: 0.6;
+    outline: none;
+    &:focus {
+      box-shadow: 0px 0px 0px 1px #FFF, 0px 0px 0px 4px var(--purple-300);
+    }
+  }
+  
+  &::-webkit-datetime-edit-ampm-field,
+  &::-webkit-datetime-edit-day-field,
+  &::-webkit-datetime-edit-hour-field,
+  &::-webkit-datetime-edit-millisecond-field,
+  &::-webkit-datetime-edit-minute-field,
+  &::-webkit-datetime-edit-month-field,
+  &::-webkit-datetime-edit-second-field,
+  &::-webkit-datetime-edit-week-field,
+  &::-webkit-datetime-edit-year-field,
+  &::-webkit-datetime-edit-text { 
+    &:focus{
+      background-color: var(--fill-action-light);
+      outline: red;
+    }
   }
 `
